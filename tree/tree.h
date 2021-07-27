@@ -70,18 +70,38 @@ typedef struct CSNode {
 
 //-----------------------------------------------------------------------
 
-
 //二叉树的二叉链表结点结构定义
-typedef struct BiTNode {
-    TElemType       data;
-    struct BiTNode *lchild, *rchild;
-} BiTNode, *BiTree;
+typedef struct BiNode {
+    TElemType      data;
+    struct BiNode *lchild, *rchild;
+} BiNode, *BiTree;
 
+//二叉树的前序遍历递归算法
+void preOrderTraverse(BiTree T, void (*operate)(TElemType* data));
+//二叉树的中序遍历递归算法
+void inOrderTraverse(BiTree T, void (*operate)(TElemType* data));
+//二叉树的后序遍历递归算法
+void postOrderTraverse(BiTree T, void (*operate)(TElemType* data));
+//二叉树的层序遍历递归算法
+void floorOrderTraverse(BiTree T, void (*operate)(TElemType* data));
 
+typedef enum {
+    //指向左右孩子指针
+    Link,
+    //指向前驱或后继的线索
+    Thread
+} PointerTag;
 
+// 线索二叉书存储结点结构
+typedef struct BiThrNode {
+    TElemType         data;
+    struct BiThrNode *lchild, *rchild;
+    PointerTag        lTag;
+    PointerTag        rTag;
+} BiThrNode, *BiThrTree;
 
-
-
+void inOrderThreading(BiThrTree* headNode, BiThrTree T);
+void inOrderTraverseBiThrTree(BiThrTree T, void (*operate)(TElemType* data));
 
 #ifdef __cplusplus
 }
