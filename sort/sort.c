@@ -1,10 +1,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <time.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
+
+#include "sort.h"
 
 //基于“插入”思想的排序
 void insertSort(int data[], int length) {
@@ -79,7 +77,7 @@ void bubbleSort(int data[], int length) {
     }
 }
 
-static void quickSortRecursive(int data[], int start, int end) {
+static void quickSortRecursiveImpl(int data[], int start, int end) {
     if (start >= end) { return; }
     int i = start;
     int j = end;
@@ -91,34 +89,34 @@ static void quickSortRecursive(int data[], int start, int end) {
         if (i < j) { data[j--] = data[i]; }
     }
     data[i] = k;
-    quickSortRecursive(data, start, i - 1);
-    quickSortRecursive(data, i + 1, end);
+    quickSortRecursiveImpl(data, start, i - 1);
+    quickSortRecursiveImpl(data, i + 1, end);
 }
 
-void quickSort_r(int data[], int length) {
-    quickSortRecursive(data, 0, length - 1);
+void quickSortRecursive(int data[], int length) {
+    quickSortRecursiveImpl(data, 0, length - 1);
 }
 
 struct Range {
     int start, end;
 };
 
-struct Range newRange(int s, int e) {
-    Range r;
+static struct Range newRange(int s, int e) {
+    struct Range r;
     r.start = s;
     r.end   = e;
     return r;
 }
 
-void quickSort(int data[], const int length) {
+void quickSortIterative(int data[], const int length) {
     if (length <= 0) { return; }
     //stack[]模拟堆栈,depth为数量,stack[depth++]为push,stack[--depth]为pop且取得元素
-    Range* stack = (Range*)malloc(length * sizeof(Range));
-    int    depth = 0;
+    struct Range* stack = (struct Range*)malloc(length * sizeof(struct Range));
+    int           depth = 0;
 
     stack[depth++] = newRange(0, length - 1);
     while (depth) {
-        Range range = stack[--depth];
+        struct Range range = stack[--depth];
         if (range.start >= range.end) { continue; }
         int i = range.start;
         int j = range.end;
@@ -192,9 +190,9 @@ void heapSort(int data[], int length) {
 }
 
 //基于“归并”思想的排序
-void mergeSort(int data[], int length) {
-    int* src  = data;
-    int* dest = (int*)malloc(length * sizeof(int));
+void mergeSortIterative(int data[], int length) {
+    int* source = data;
+    int* dest   = (int*)malloc(length * sizeof(int));
     //将src中的元素merge到dest中
     for (int seg = 1; seg < length; seg *= 2) {
         for (int start = 0; start < length; start += 2 * seg) {
@@ -203,33 +201,32 @@ void mergeSort(int data[], int length) {
             int end1   = start + seg < length ? start + seg : length;
             int start2 = end1;
             int end2   = start + 2 * seg < length ? start + 2 * seg : length;
-            while (start1 < end1 && start2 < end2) { dest[k++] = src[start1] < src[start2] ? src[start1++] : src[start2++]; }
-            while (start1 < end1) { dest[k++] = src[start1++]; }
-            while (start2 < end2) { dest[k++] = src[start2++]; }
+            while (start1 < end1 && start2 < end2) { dest[k++] = source[start1] < source[start2] ? source[start1++] : source[start2++]; }
+            while (start1 < end1) { dest[k++] = source[start1++]; }
+            while (start2 < end2) { dest[k++] = source[start2++]; }
         }
         //交换src和dest的指针
-        int* temp = src;
-        src       = dest;
+        int* temp = source;
+        source    = dest;
         dest      = temp;
     }
     //这里的src已经又和dest交换过了，其实就是dest
-    if (src != data) {
-        for (int i = 0; i < length; i++) { data[i] = src[i]; }
-        dest = src;
+    if (source != data) {
+        for (int i = 0; i < length; i++) { data[i] = source[i]; }
+        dest = source;
     }
     free(dest);
 }
 
-static void mergeSortRecursive(int data[], int reg[], int start, int end) {
+static void mergeSortRecursiveImpl(int data[], int reg[], int start, int end) {
     if (start >= end) { return; }
-
     int mid    = (end + start) / 2;
     int start1 = start;
     int end1   = mid;
     int start2 = mid + 1;
     int end2   = end;
-    mergeSortRecursive(data, reg, start1, end1);
-    mergeSortRecursive(data, reg, start2, end2);
+    mergeSortRecursiveImpl(data, reg, start1, end1);
+    mergeSortRecursiveImpl(data, reg, start2, end2);
     int k = start;
     while (start1 <= end1 && start2 <= end2) { reg[k++] = data[start1] < data[start2] ? data[start1++] : data[start2++]; }
     while (start1 <= end1) { reg[k++] = data[start1++]; }
@@ -237,115 +234,8 @@ static void mergeSortRecursive(int data[], int reg[], int start, int end) {
     for (k = start; k <= end; k++) { data[k] = reg[k]; }
 }
 
-void mergeSort_r(int data[], int length) {
+void mergeSortRecursive(int data[], int length) {
     int* reg = (int*)malloc(length * sizeof(int));
-    mergeSortRecursive(data, reg, 0, length - 1);
+    mergeSortRecursiveImpl(data, reg, 0, length - 1);
     free(reg);
-}
-
-//TEST DOME
-//===================================================================================
-#include <thread>
-#include <algorithm>
-#include <ratio>
-#include <chrono>
-#include <iostream>
-
-#define MAXSIZE 100000L
-
-int templateList[MAXSIZE];
-int answer[MAXSIZE];
-
-double sortTest(void (*func)(int data[], int length), int data[], int length) {
-    std::chrono::system_clock::time_point t1 = std::chrono::system_clock::now();
-    if (func) { func(data, length); }
-    std::chrono::system_clock::time_point t2 = std::chrono::system_clock::now();
-    for (int i = 0; i < length; i++) {
-        if (data[i] != answer[i]) { return 0; }
-    }
-    return std::chrono::duration<double, std::milli>(t2 - t1).count();
-}
-
-int main(int argc, const char* argv[]) {
-    srand(time(0));
-    {
-        for (int i = 0; i < MAXSIZE; i++) { templateList[i] = rand(); }
-        memcpy(&answer, &templateList, sizeof(answer));
-        std::chrono::system_clock::time_point t1 = std::chrono::system_clock::now();
-        std::sort(answer, answer + MAXSIZE);
-        std::chrono::system_clock::time_point t2 = std::chrono::system_clock::now();
-        printf("std::sort() time cost: %fms\r\n", std::chrono::duration<double, std::milli>(t2 - t1).count());
-    }
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("selectSort time cost: %fms\r\n", sortTest(selectSort, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("insertSort time cost: %fms\r\n", sortTest(insertSort, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("shellSort time cost: %fms\r\n", sortTest(shellSort, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("heapSort time cost: %fms\r\n", sortTest(heapSort, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("mergeSort time cost: %fms\r\n", sortTest(mergeSort, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("quickSort time cost: %fms\r\n", sortTest(quickSort, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("quickSort_r time cost: %fms\r\n", sortTest(quickSort_r, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("insertSortHalf time cost: %fms\r\n", sortTest(insertSortHalf, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("mergeSort_r time cost: %fms\r\n", sortTest(mergeSort_r, data, MAXSIZE));
-        free(data);
-    }).detach();
-
-    std::thread([&]() {
-        int* data = (int*)malloc(MAXSIZE * sizeof(int));
-        memcpy(data, &templateList, MAXSIZE * sizeof(int));
-        printf("bubbleSort time cost: %fms\r\n", sortTest(bubbleSort, data, MAXSIZE));
-        free(data);
-    }).join();
-
-    return 0;
 }

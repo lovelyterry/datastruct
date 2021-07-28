@@ -1,0 +1,1 @@
+cd sort ; g++ .\sort.c test.cc -o sort.exe -Os; ./sort.exe cd ..
