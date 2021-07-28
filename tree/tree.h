@@ -28,6 +28,23 @@ extern "C" {
 
 //-----------------------------------------------------------------------
 
+// 1. 二叉树中，第 i 层最多有 2^(i-1) 个结点。
+// 2. 如果二叉树的深度为 K，那么此二叉树最多有 2^(K)-1 个结点。
+// 3. 二叉树中，终端结点数（叶子结点数）为 n0，度为 2 的结点数为 n2，则 n0=n2+1。
+// 4. 具有n个结点的完全二叉树的深度为|log2(n+1)|（|x|表示不大于x的最大整数）
+
+//      性质 3 的计算方法为：对于一个二叉树来说，除了度为 0 的叶子结点和度为 2 的结点，
+//      剩下的就是度为 1 的结点（设为 n1），那么总结点 n=n0+n1+n2。 同时，对于每一个
+//      结点来说都是由其父结点分支表示的，假设树中分枝数为 B，那么总结点数 n=B+1。而分
+//      枝数是可以通过 n1 和 n2 表示的，即 B=n1+2*n2。所以，n 用另外一种方式表示为 
+//      n=n1+2*n2+1。两种方式得到的 n 值组成一个方程组，就可以得出 n0=n2+1。
+
+// 性质5：如果对一棵有n个结点的完全二叉树（其深度为）的结点按层序编号（从第1层到第n层，每层从左到右），对任一结点i（1≤i≤n）有：
+// 1．如果i=1，则结点i是二叉树的根，无双亲；如果i>1，则其双亲是结点。
+// 2．如果2i>n，则结点i无左孩子（结点i为叶子结点）；否则其左孩子是结点2i。
+// 3．如果2i+1>n，则结点i无右孩子；否则其右孩子是结点2i+1。
+
+
 #define MAX_TREE_SIZE 100
 
 //树结点的数据类型
@@ -102,6 +119,23 @@ typedef struct BiThrNode {
 
 void inOrderThreading(BiThrTree* headNode, BiThrTree T);
 void inOrderTraverseBiThrTree(BiThrTree T, void (*operate)(TElemType* data));
+
+//哈夫曼树结点结构
+typedef struct {
+    //结点权重
+    int weight;
+    //父结点、左孩子、右孩子在数组中的位置下标(-1表示不存在)
+    int parent, left, right;
+} HTNode, *HuffmanTree;
+
+typedef char ** HuffmanCode;
+
+//HT为地址传递的存储哈夫曼树的数组，w为存储结点权重值的数组，n为结点个数
+void createHuffmanTree(HuffmanTree* HT, int* w, int n);
+//从叶子结点一直找到根结点，逆向记录途中经过的标记。(也可以从根节点出发，遍历哈夫曼数，查找对应元素，从而获取路径)
+void huffmanCoding(HuffmanTree HT, HuffmanCode* HC, int n);
+//计算皇后问题
+int calculteQueenSolution(int* chessboard, const int boardSize);
 
 #ifdef __cplusplus
 }
