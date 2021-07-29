@@ -20,7 +20,7 @@ extern "C" {
 
 typedef int QElemType;
 
-#define MAX_QUEUE_SIZE 1000
+#define MAX_QUEUE_SIZE 1024
 
 typedef struct {
     QElemType data[MAX_QUEUE_SIZE];

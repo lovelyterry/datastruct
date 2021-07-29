@@ -43,7 +43,7 @@ int main(void) {
         HuffmanCode htable;
 
         srand(time(0));
-        for (int i = 0; i < sizeof(weight) / sizeof(int); i++) { weight[i] = rand(); }
+        for (size_t i = 0; i < sizeof(weight) / sizeof(int); i++) { weight[i] = rand(); }
         createHuffmanTree(&htree, weight, sizeof(weight) / sizeof(int));
         huffmanCoding(htree, &htable, sizeof(weight) / sizeof(int));
         printHuffmanCode(htable, weight, sizeof(weight) / sizeof(int));

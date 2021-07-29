@@ -1,0 +1,2 @@
+D:\mingw64\bin\ar.exe qc libdatastruct.a CMakeFiles/datastruct.dir/tree/tree.c.obj CMakeFiles/datastruct.dir/stack/stack.c.obj CMakeFiles/datastruct.dir/sort/sort.c.obj CMakeFiles/datastruct.dir/search/search.c.obj CMakeFiles/datastruct.dir/queue/queue.c.obj CMakeFiles/datastruct.dir/graph/graph.c.obj
+D:\mingw64\bin\ranlib.exe libdatastruct.a

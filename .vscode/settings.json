@@ -71,6 +71,7 @@
         "queue.h": "c",
         "search.h": "c",
         "stdbool.h": "c",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "graph.h": "c"
     }
 }
