@@ -8,7 +8,7 @@
             "name": "g++.exe - 生成和调试活动文件",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/sort.exe",
+            "program": "${workspaceFolder}/build/search.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "D:/mingw64/bin",
@@ -23,7 +23,7 @@
                     "ignoreFailures": true
                 }
             ],
-            // "preLaunchTask": "C/C++: g++.exe 生成活动文件"
+            "preLaunchTask": "build"
         }
     ]
 }

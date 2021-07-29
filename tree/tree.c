@@ -1,4 +1,4 @@
-#include <stddef.h>
+﻿#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -33,9 +33,9 @@ void postOrderTraverse(BiTree T, void (*operate)(TElemType* data)) {
 //二叉树的层序遍历递归算法
 void floorOrderTraverse(BiTree T, void (*operate)(TElemType* data)) {
     if (T == NULL) { return; }
-    //二叉树最多10层 2^10 = 1024
+    //二叉树最�?0�?2^10 = 1024
 #define queueDepth 1024
-    BiTree biTreeQueue[queueDepth + 1] = {};
+    BiTree biTreeQueue[queueDepth + 1] = {0};
     int    front                       = 0;
     int    rear                        = 0;
 
@@ -60,7 +60,7 @@ static BiThrTree preNode;
 static void inOrderThreadingImpl(BiThrTree T) {
     if (T == NULL) { return; }
     inOrderThreadingImpl(T->lchild);
-    //如果当前节点的左子树为空，则令之左指针指向上一个节点
+    //如果当前节点的左子树为空，则令之左指针指向上一个节�?
     if (T->lchild == NULL) {
         T->lTag   = Thread;
         T->lchild = preNode;
@@ -75,7 +75,7 @@ static void inOrderThreadingImpl(BiThrTree T) {
         preNode->rTag = Link;
     }
     preNode = T;
-    //将当前节点作为上"右节点或右节点的左节点"的上一个节点
+    //将当前节点作为上"右节点或右节点的左节�?的上一个节�?
     inOrderThreadingImpl(T->rchild);
 }
 
@@ -92,7 +92,7 @@ void inOrderThreading(BiThrTree* headNode, BiThrTree T) {
         (*headNode)->lchild = T;
         (*headNode)->lTag   = Link;
         preNode             = *headNode;
-        //线索化二叉树，preNode作为全局变量，线索化结束后，preNode指向中序序列中最后一个结点
+        //线索化二叉树，preNode作为全局变量，线索化结束后，preNode指向中序序列中最后一个结�?
         inOrderThreadingImpl(T);
         preNode->rchild     = *headNode;
         preNode->rTag       = Thread;
@@ -118,7 +118,7 @@ void inOrderTraverseBiThrTree(BiThrTree T, void (*operate)(TElemType* data)) {
 //HT数组中存放的哈夫曼树，size表示HT数组的大小，index1和index2为树中最小的两个节点索引
 static void selectMin2(HuffmanTree HT, int size, int* index1, int* index2) {
     int min1, min2;
-    //遍历数组初始下标为 0
+    //遍历数组初始下标�?0
     int i = 0;
     //找到还没构建树的结点
     while (HT[i].parent != -1 && i < size) { i++; }
@@ -126,7 +126,7 @@ static void selectMin2(HuffmanTree HT, int size, int* index1, int* index2) {
     *index1 = i;
     i++;
     while (HT[i].parent != -1 && i < size) { i++; }
-    //对找到的两个结点比较大小，min2为大的，min1为小的
+    //对找到的两个结点比较大小，min2为大的，min1为小�?
     if (HT[i].weight < min1) {
         min2    = min1;
         *index2 = *index1;
@@ -151,13 +151,13 @@ static void selectMin2(HuffmanTree HT, int size, int* index1, int* index2) {
     }
 }
 
-//HT为地址传递的存储哈夫曼树的数组，w为存储结点权重值的数组，n为结点个数
+//HT为地址传递的存储哈夫曼树的数组，w为存储结点权重值的数组，n为结点个�?
 void createHuffmanTree(HuffmanTree* HT, int* w, int n) {
-    if (n <= 1) { return; }  // 如果只有一个编码就相当于0
+    if (n <= 1) { return; }  // 如果只有一个编码就相当�?
     int m = 2 * n - 1;       // 哈夫曼树总节点数，n就是叶子结点
     *HT   = (HuffmanTree)malloc((m) * sizeof(HTNode));
     memset(*HT, 0, (m) * sizeof(HTNode));
-    // 初始化哈夫曼树中的所有结点
+    // 初始化哈夫曼树中的所有结�?
     for (int i = 0; i < n; i++) {
         (*HT + i)->weight = *(w + i);
         (*HT + i)->parent = -1;
@@ -184,21 +184,21 @@ void createHuffmanTree(HuffmanTree* HT, int* w, int n) {
 }
 
 //HT为哈夫曼树，HC为存储结点哈夫曼编码的二维动态数组，n为结点的个数
-//从叶子结点一直找到根结点，逆向记录途中经过的标记。
+//从叶子结点一直找到根结点，逆向记录途中经过的标记�?
 void huffmanCoding(HuffmanTree HT, HuffmanCode* HC, int n) {
     *HC            = (HuffmanCode)malloc(n * sizeof(char*));
-    char* codeStr  = (char*)malloc(n * sizeof(char));  //存放结点哈夫曼编码的字符串数组
+    char* codeStr  = (char*)malloc(n * sizeof(char));  //存放结点哈夫曼编码的字符串数�?
     codeStr[n - 1] = '\0';                             //字符串结束符
     for (int i = 0; i < n; i++) {
         //从叶子结点出发，得到的哈夫曼编码是逆序的，需要在字符串数组中逆序存放
         int start = n - 1;
-        //当前结点在数组中的位置
+        //当前结点在数组中的位�?
         int c = i;
-        //当前结点的父结点在数组中的位置
+        //当前结点的父结点在数组中的位�?
         int j = HT[i].parent;
-        // 一直寻找到根结点
+        // 一直寻找到根结�?
         while (j != -1) {
-            // 如果该结点是父结点的左孩子则对应路径编码为0，否则为右孩子编码为1
+            // 如果该结点是父结点的左孩子则对应路径编码�?，否则为右孩子编码为1
             if (HT[j].left == c) {
                 codeStr[--start] = '0';
             } else {
@@ -217,7 +217,7 @@ void huffmanCoding(HuffmanTree HT, HuffmanCode* HC, int n) {
 
 static int count = 0;
 
-//检测棋子放在第row行第column列是否成功
+//检测棋子放在第row行第column列是否成�?
 static bool checkPlaceOK(int* chessboard, int row, int column) {
     for (int i = 0; i < row; ++i) {
         //遍历已经放置完成，同一行只放置了一个，所以不可能存在冲突

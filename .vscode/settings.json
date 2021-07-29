@@ -67,6 +67,10 @@
         "stdlib.h": "c",
         "string.h": "c",
         "sort.h": "c",
-        "tree.h": "c"
+        "tree.h": "c",
+        "queue.h": "c",
+        "search.h": "c",
+        "stdbool.h": "c",
+        "cinttypes": "cpp"
     }
 }

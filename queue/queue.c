@@ -1,4 +1,4 @@
-#include <stdlib.h>
+﻿#include <stdlib.h>
 
 #include "queue.h"
 
@@ -30,6 +30,7 @@ int enLinkQueue(LinkQueue* Q, QElemType e) {
     node->next    = NULL;
     Q->rear->next = node;
     Q->rear       = node;
+    Q->size++;
     return 0;
 }
 
@@ -43,5 +44,6 @@ int deLinkQueue(LinkQueue* Q, QElemType* e) {
     //如果出列的数据是最后一个数据，则出列后链表为空，此时需要将链表尾部指针指向表头
     if (Q->rear == p) { Q->rear = Q->front; }
     free(p);
+    Q->size--;
     return 0;
 }

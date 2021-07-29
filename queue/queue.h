@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,6 +36,7 @@ typedef struct QNode {
 typedef struct {
     QNode* front;
     QNode* rear;
+    int size;
 } LinkQueue;
 
 int lengthSqQueue(SqQueue* Q);
