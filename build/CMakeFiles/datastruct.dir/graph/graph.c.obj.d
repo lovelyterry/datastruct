@@ -1,6 +1,7 @@
 CMakeFiles/datastruct.dir/graph/graph.c.obj: \
  E:\study\datastruct\code\graph\graph.c \
  E:\study\datastruct\code\graph\graph.h \
+ D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdbool.h \
  E:/study/datastruct/code/queue/queue.h \
  D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stddef.h \
  D:/mingw64/x86_64-w64-mingw32/include/stddef.h \
@@ -11,7 +12,6 @@ CMakeFiles/datastruct.dir/graph/graph.c.obj: \
  D:/mingw64/x86_64-w64-mingw32/include/vadefs.h \
  D:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_directx.h \
  D:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
- D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdbool.h \
  D:/mingw64/x86_64-w64-mingw32/include/stdlib.h \
  D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/limits.h \
  D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/syslimits.h \
@@ -23,4 +23,6 @@ CMakeFiles/datastruct.dir/graph/graph.c.obj: \
  D:/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
  D:/mingw64/x86_64-w64-mingw32/include/swprintf.inl \
  D:/mingw64/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
- D:/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h
+ D:/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h \
+ D:/mingw64/x86_64-w64-mingw32/include/string.h \
+ D:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h

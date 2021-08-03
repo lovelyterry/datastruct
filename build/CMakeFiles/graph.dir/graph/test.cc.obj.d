@@ -129,4 +129,5 @@ CMakeFiles/graph.dir/graph/test.cc.obj: \
  D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/ostream.tcc \
  D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/istream \
  D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/istream.tcc \
- E:\study\datastruct\code\graph\graph.h
+ E:\study\datastruct\code\graph\graph.h \
+ D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdbool.h

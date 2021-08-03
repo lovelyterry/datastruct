@@ -25,7 +25,9 @@ CMakeFiles/datastruct.dir/graph/graph.c.obj: ../graph/graph.c \
   D:/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
   D:/mingw64/x86_64-w64-mingw32/include/swprintf.inl \
   D:/mingw64/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
-  D:/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h
+  D:/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h \
+  D:/mingw64/x86_64-w64-mingw32/include/string.h \
+  D:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h
 
 CMakeFiles/datastruct.dir/queue/queue.c.obj: ../queue/queue.c \
   D:/mingw64/x86_64-w64-mingw32/include/stdlib.h \
@@ -180,6 +182,10 @@ D:/mingw64/x86_64-w64-mingw32/include/_mingw_print_push.h:
 
 D:/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h:
 
+D:/mingw64/x86_64-w64-mingw32/include/string.h:
+
+D:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h:
+
 ../queue/queue.c:
 
 ../sort/sort.c:
@@ -199,7 +205,3 @@ D:/mingw64/x86_64-w64-mingw32/include/stdint.h:
 ../stack/stack.c:
 
 ../tree/tree.c:
-
-D:/mingw64/x86_64-w64-mingw32/include/string.h:
-
-D:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h:
