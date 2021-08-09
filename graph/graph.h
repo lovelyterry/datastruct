@@ -24,14 +24,16 @@ extern "C" {
 //     HFSTraverse(G):         对图G中进行广度优先遍历，在遍历过程对每个顶点调用。
 // endADT
 
-typedef char VertexType;
-typedef int  EdgeType;
+#include <stdbool.h>
+
+typedef float VertexType;
+typedef float EdgeType;
 
 //图的邻接矩阵表示方法
 
 #define MAXVEX 100
 //无穷大
-#define INFINITY (0x7FFFFFFFL)
+#define INFINITY (65535)
 
 typedef struct MGraph {
     //顶点数组
@@ -44,7 +46,7 @@ typedef struct MGraph {
 
 //图的邻接表表示方法
 typedef struct EdgeNode {
-    //邻接点域(和哪个个顶点相连)，存储该顶点对应的下标
+    //邻接点域(连接到哪个顶点相连)，存储该顶点对应的下标
     int adjvex;
     //用于存储权值，对于非网图可以不需要
     EdgeType weight;
@@ -54,6 +56,10 @@ typedef struct EdgeNode {
 
 //顶点表结点
 typedef struct VertexNode {
+    //顶点入度
+    int in;
+    //顶点出度
+    int out;
     //顶点域，存储顶点信息
     VertexType data;
     //边的表头指针
@@ -62,10 +68,9 @@ typedef struct VertexNode {
 
 typedef struct GraphAdjList {
     AdjList adjList;
-    int numVertexes;
-    int numEdges;
+    int     numVertexes;
+    int     numEdges;
 } GraphAdjList;
-
 
 //邻接矩阵的深度遍历操作
 void depthFirstSearchTraverseMGraph(MGraph* G, void (*operate)(VertexType* data));
@@ -77,12 +82,24 @@ void breadthFirstSearchTraverseMGraph(MGraph* G, void (*operate)(VertexType* dat
 void breadthFirstSearchTraverseGraphAdjList(GraphAdjList* GL, void (*operate)(VertexType* data));
 
 //Prim算法生成最小生成树
-//adjvex记录某一顶点(即数组索引对应的顶点)和“已经归纳进最小生成树中的顶点”中的哪个相连时权值最小，也就是最后要求的结果
-int miniSpanTreePrim(MGraph* G, int* adjvex);
+int miniSpanTreePrim(MGraph* G, void (*operate)(VertexType* vex1, VertexType* vex2));
+//Kruskal算法生成最小生成树
+int miniSpanTreeKruskal(MGraph* G, void (*operate)(VertexType* vex1, VertexType* vex2));
 
+//Dijkstra算法
+//求有向网G的v0顶点到其余顶点v最短路径patharc[v]及带权长度shortPathTable[v]
+//patharc[v]的值为前驱顶点下标(最短的路径只有一条)，shortPathTable[v]表示v0到v的最短路径长度和。
+void shortestPathDijkstra(MGraph* G, int v0, int patharc[], int shortPath[]);
 
+//Floyd算法，求网图G中各顶点v到其余顶点w最短路径P[v][w]及带权长度D[v][w]
+//遍历所有的顶点K,判断经过顶点 K 是否存在一条可行路径比直达的路径的权值小，如果式子成立，此时只需要更新记录的权值和即可。
+//其中pathMatirx二维数组存放各对顶点的最短路径经过的顶点，shortPathMatirx二维数组存储各个顶点之间的权值
+void shortestPathFloyd(MGraph* G, int* pathMatirx[], int* shortPathMatirx[]);
 
-
+//拓扑排序
+bool topologicalSort(GraphAdjList* GL, void (*operate)(VertexType* data));
+//关键路径
+void criticalPath(GraphAdjList* GL);
 
 #ifdef __cplusplus
 }
